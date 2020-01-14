@@ -71,7 +71,7 @@
     <div class=" right">
         <!-- Button trigger modal -->
         @include('layouts.message')
-
+        <a href="home" class="btn btn-primary">Back</a>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop" >Add Test</button>
     </div>
     <div class="card-body" id="card_body">

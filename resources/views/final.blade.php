@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>SCORE</title>
+  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -51,17 +51,7 @@
    <p style="float:right;"> Total Score : <?php echo $count4=$count+$count1+$count2+$count3;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
   </div>
 </div>
-<div class='container'>
-  <button class='btn btn-default float-right'>
-  <a href="{{ route('logout') }}"
-      onclick="event.preventDefault();
-               document.getElementById('logout-form').submit();" class='glyphicon glyphicon-off'>
-      Logout
-  </a></button>
-  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-      {{ csrf_field() }}
-  </form>
-</div>
+
 <script>
 window.onload=function(){
   localStorage.clear();

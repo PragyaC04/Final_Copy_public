@@ -42,8 +42,6 @@ class CreativityController extends Controller
      //  $rating = new qualitative;
       // $data=input::all('value');
        //$count=1;
-       $rating->name=auth()->user()->name;
-     $rating->email=auth()->user()->email;
        $data= $request->all();
        $name=array_keys($data);
        $count=count($name);

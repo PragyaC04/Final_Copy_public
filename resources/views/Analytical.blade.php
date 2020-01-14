@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Analytical</title>
+  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -19,18 +19,21 @@
   padding: 0;
   overflow: hidden;
 }
+
 .wrapper{
     display: grid;
   grid-template-rows: 520px;
   overflow:auto;
   margin-top:30px;
 }
+
 .content{
   display: grid;
   grid-template-columns: 250px 1fr;
   grid-gap: 10px;
   overflow-y:auto;
 }
+
 .fieldsContainer{
   display: grid;
   grid-template-columns: repeat(3, minmax(70px,1fr));
@@ -38,17 +41,21 @@
   grid-gap: 10px;
   overflow-y:scroll;/*added*/
 }
+
 .section2{
     overflow-y:scroll;
 }
+
 .card1{
   padding: 10px;
   background: #ddd;
 }
+
 :target {
   border: 2px solid #D4D4D4;
   background-color:  #D5D8DC ;
 }
+
 .qs{
   background-color:#141414;
   color:#ffffff;
@@ -64,6 +71,7 @@
       grid-template-columns: 1fr;
     grid-auto-rows: 50px;
   overflow-y:scroll;/*added*/
+
     }
     .content{
   display: grid;
@@ -71,6 +79,7 @@
   overflow-y:auto;
 }
 }
+
 .modal-backdrop{
    backdrop-filter: blur(5px);
    background-color: #01223770;
@@ -78,6 +87,7 @@
 .modal-backdrop.in{
    opacity: 1 !important;
 }
+
 body.modal-open .supreme-container{
     -webkit-filter: blur(1px);
     -moz-filter: blur(1px);
@@ -85,11 +95,13 @@ body.modal-open .supreme-container{
     -ms-filter: blur(1px);
     filter: blur(1px);
 }
+
+
   </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">FE TEST</a>
+  <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -114,7 +126,8 @@ body.modal-open .supreme-container{
             <button type="button" class="btn btn-success nav-link" id="timer">60:00</button>
             </li>
             &nbsp;&nbsp;
-            <li class="nav-item"><button type="button" class="btn btn-success nav-link" onclick="window.location='{{ route('final') }}'" >End Test</button>
+            <li class="nav-item">
+            <button type="button" class="btn btn-success nav-link" onclick="window.location='{{ route('final') }}'">End Test</button>
             </li>
            
         </ul>
@@ -122,8 +135,8 @@ body.modal-open .supreme-container{
   </div>
 </nav>
 <div class="alert alert-secondary" role="alert" style="text-align:center;">
-  Kindly submit all the sections before submitting the test
-  </div>
+Kindly submit all the sections before submitting the test
+</div>
 <form name="myForm" method="post" action = "analytical">
 {{ csrf_field() }}
 <div class="wrapper">
@@ -143,25 +156,24 @@ body.modal-open .supreme-container{
             <br>
       @endif
       @if($user2->questionimg)
-      <img src="{{ asset('uploads/questions/'.$user2->questionimg)}}"  alt="">
+      <img src="data:image/png;base64,{{chunk_split(base64_encode($user2->questionimg))}}">
       @endif</p>
       <p style="float:right;">({{ $user2->marks}})</p>
   </div>
   <div class="card-body">
 
     <p class="card-text" > 
-    <input type="radio" name="{{$user2->qid}}" class="{{$user2->qid}}" value="1" >   
-    @if($user2->option1img)
-     <img src="{{ asset('uploads/option1/'.$user2->option1img)}}"  alt="">
+    <input type="radio" name="{{$user2->qid}}" class="{{$user2->qid}}" value="1" >   @if($user2->option1img)
+     <img src="data:image/png;base64,{{chunk_split(base64_encode($user2->option1img))}}">
       @endif
       @if($user2->option1)
       {{$user2->option1}}
-      @endif
+      @endif</input>
    </p>
       <p class="card-text"> 
       <input type="radio" name="{{$user2->qid}}" class="{{$user2->qid}}" value="2">
      @if($user2->option2img)
-     <img src="{{ asset('uploads/option2/'.$user2->option2img)}}"  alt="">
+     <img src="data:image/png;base64,{{chunk_split(base64_encode($user2->option2img))}}">
       @endif
       @if($user2->option2)
       {{$user2->option2}}
@@ -170,7 +182,7 @@ body.modal-open .supreme-container{
       <p class="card-text">
       <input type="radio" name="{{$user2->qid}}" class="{{$user2->qid}}" value="3"> 
      @if($user2->option3img)
-     <img src="{{ asset('uploads/option3/'.$user2->option3img)}}"  alt="">
+     <img src="data:image/png;base64,{{chunk_split(base64_encode($user2->option3img))}}">
       @endif
       @if($user2->option3)
       {{$user2->option3}}
@@ -179,7 +191,7 @@ body.modal-open .supreme-container{
       <p class="card-text"> 
       <input type="radio" name="{{$user2->qid}}" class="{{$user2->qid}}" value="4">
      @if($user2->option4img)
-     <img src="{{ asset('uploads/option4/'.$user2->option4img)}}"  alt="">
+     <img src="data:image/png;base64,{{chunk_split(base64_encode($user2->option4img))}}">
       @endif
       @if($user2->option4)
       {{$user2->option4}}
@@ -191,10 +203,10 @@ body.modal-open .supreme-container{
 @endforeach
 
     </div>
-    <div style='padding-bottom:50px;'>
-    <button type="button" class="btn qs" data-toggle="modal" data-target="#myModal">Submit Section</button></div>
-    </div>
 
+    <button type="button" class="btn qs" data-toggle="modal" data-target="#myModal" id="Submitsec">Submit Section</button>
+    </div>
+<input type="hidden" value="0" id="pagesfield" name="pagesfield">
 </div>
 <!-- Modal -->
 <div id="myModal" class="modal" role="dialog">
@@ -235,6 +247,7 @@ body.modal-open .supreme-container{
     </div>
   </div>
 </div>
+
 </form>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
@@ -272,6 +285,9 @@ body.modal-open .supreme-container{
     });
 </script>
 <script>
+$('#Submitsec').click(function(){
+  $('#pagesfield').val("1");
+});
 var y=1;
 $(document).ready(function(){
 var parent= $(".section2");
@@ -317,6 +333,7 @@ $(".card-text > input[type=radio]").click(function(){
   
   });
 });
+
 $("div[name='card1']").each(function(){
   $("#card"+y).html(y);
   y=y+1;
@@ -329,6 +346,7 @@ $('#Auto').click(function(){
 window.onload=function(){
   localStorage.clear();
 }*/
+
 </script>
 </body>
 </html>

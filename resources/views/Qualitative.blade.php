@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Qualitative</title>
+  <title>FE TEST MODULE</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -92,7 +92,7 @@ body.modal-open .supreme-container{
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">FE TEST</a>
+  <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -118,16 +118,13 @@ body.modal-open .supreme-container{
             </li>
             &nbsp;&nbsp;
             <li class="nav-item">
-             <button type="button" class="btn btn-success nav-link" onclick="window.location='{{ route('final') }}'" >End Test</button>
+            <button type="button" class="btn btn-success nav-link" onclick="window.location='{{ url('final') }}'" >Submit Test</button>
             </li>
            
         </ul>
       </div>  
   </div>
 </nav>
-<div class="alert alert-secondary" role="alert" style="text-align:center;">
-Kindly submit all the sections before submitting the test
-</div>
 <form name="myForm" class="FormSubmit" method="post" action = "qualitative" >
 {{ csrf_field() }}
 <div class="wrapper">
@@ -201,9 +198,9 @@ Kindly submit all the sections before submitting the test
 
 
 
-<div style='padding-bottom:50px;'>
+
 <button type="button" id="SubmitButtonFinal" class="btn qs" data-toggle="modal" data-target="#myModal">Submit Section</button>
-</div>   </div>
+    </div>
 
 </div>
 <!-- Modal -->

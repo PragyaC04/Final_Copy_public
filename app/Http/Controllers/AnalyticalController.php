@@ -40,12 +40,15 @@ class AnalyticalController extends Controller
         $rating = Qualitative::firstOrNew(['id' =>auth()->user()->id]);
         $data= $request->all();
         //$count=1;
-        $rating->name=auth()->user()->name;
-     $rating->email=auth()->user()->email;
         $name=array_keys($data);
         $count=count($name);
+        $k=$request->input('pagesfield');
+     //   echo $k;  
        // return $name;
-       for($d=2;$d<=$count;$d=$d+1)
+       //return $data;
+      // $v=$name[$count];
+       //echo $v;
+       for($d=2;$d<=$count-1;$d=$d+1)
        // foreach($name as $n)
         {
               $rating->id= auth()->user()->id;
@@ -57,7 +60,14 @@ class AnalyticalController extends Controller
          $rating->save();
       //   $section='Analytical';
       //return view('viewfinal',['section'=>$section]);
-        return redirect()->route('qualitative');
+      if($k=="0")
+      {
+        return redirect()->route('final');
+      }
+      else{
+        return redirect('qualitative');
+      }
+        
     }
 
     /**

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Creativity</title>
+  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -19,18 +19,21 @@
   padding: 0;
   overflow: hidden;
 }
+
 .wrapper{
     display: grid;
   grid-template-rows: 520px;
   overflow:auto;
   margin-top:30px;
 }
+
 .content{
   display: grid;
   grid-template-columns: 250px 1fr;
   grid-gap: 10px;
   overflow-y:auto;
 }
+
 .fieldsContainer{
   display: grid;
   grid-template-columns: repeat(3, minmax(70px,1fr));
@@ -38,17 +41,21 @@
   grid-gap: 10px;
   overflow-y:scroll;/*added*/
 }
+
 :target {
   border: 2px solid #D4D4D4;
   background-color: #D5D8DC;
 }
+
 .section2{
     overflow-y:scroll;
 }
+
 .card1{
   padding: 10px;
   background: #ddd;
 }
+
 .qs{
   background-color:#141414;
   color:#ffffff;
@@ -57,12 +64,15 @@
   background-color:#141414;
   color:#FCF3CF;
 }
+
+
 @media (max-width: 900px) {
     .fieldsContainer{
       display: grid;
       grid-template-columns: 1fr;
     grid-auto-rows: 50px;
   overflow-y:scroll;/*added*/
+
     }
     .content{
   display: grid;
@@ -77,6 +87,7 @@
 .modal-backdrop.in{
    opacity: 1 !important;
 }
+
 body.modal-open .supreme-container{
     -webkit-filter: blur(1px);
     -moz-filter: blur(1px);
@@ -88,7 +99,7 @@ body.modal-open .supreme-container{
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">FE TEST</a>
+  <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -114,7 +125,7 @@ body.modal-open .supreme-container{
             </li>
             &nbsp;&nbsp;
             <li class="nav-item">
-             <button type="button" class="btn btn-success nav-link" onclick="window.location='{{ route('final') }}'" >End Test</button>
+            <button type="button" class="btn btn-success nav-link" onclick="window.location='{{ route('final') }}'">End Test</button>
             </li>
            
         </ul>
@@ -144,7 +155,7 @@ Kindly submit all the sections before submitting the test
             {{ $user1->question }}<br><br>
       @endif
       @if($user1->questionimg)
-      <img src="{{ asset('uploads/questions/'.$user1->questionimg)}}"  alt="">
+      <img src="data:image/png;base64,{{chunk_split(base64_encode($user1->questionimg))}}">
       @endif</p>
       <p style="float:right;">({{ $user1->marks}})</p>
   </div>
@@ -152,7 +163,7 @@ Kindly submit all the sections before submitting the test
 
     <p class="card-text" > 
     <input type="radio" name="{{$user1->qid}}" class="{{$user1->qid}}" value="1">   @if($user1->option1img)
-     <img src="{{ asset('uploads/option1/'.$user1->option1img)}}"  alt="">
+     <img src="data:image/png;base64,{{chunk_split(base64_encode($user1->option1img))}}">
       @endif
       @if($user1->option1)
       {{$user1->option1}}
@@ -161,7 +172,7 @@ Kindly submit all the sections before submitting the test
       <p class="card-text"> 
       <input type="radio" name="{{$user1->qid}}" class="{{$user1->qid}}" value="2">
      @if($user1->option2img)
-     <img src="{{ asset('uploads/option2/'.$user1->option2img)}}"  alt="">
+     <img src="data:image/png;base64,{{chunk_split(base64_encode($user1->option2img))}}">
       @endif
       @if($user1->option2)
       {{$user1->option2}}
@@ -170,7 +181,7 @@ Kindly submit all the sections before submitting the test
       <p class="card-text">
       <input type="radio" name="{{$user1->qid}}" class="{{$user1->qid}}" value="3"> 
      @if($user1->option3img)
-     <img src="{{ asset('uploads/option3/'.$user1->option3img)}}"  alt="">
+     <img src="data:image/png;base64,{{chunk_split(base64_encode($user1->option3img))}}">
       @endif
       @if($user1->option3)
       {{$user1->option3}}
@@ -179,7 +190,7 @@ Kindly submit all the sections before submitting the test
       <p class="card-text"> 
       <input type="radio" name="{{$user1->qid}}" class="{{$user1->qid}}" value="4">
      @if($user1->option4img)
-     <img src="{{ asset('uploads/option4/'.$user1->option4img)}}"  alt="">
+     <img src="data:image/png;base64,{{chunk_split(base64_encode($user1->option4img))}}">
       @endif
       @if($user1->option4)
       {{$user1->option4}}
@@ -189,7 +200,7 @@ Kindly submit all the sections before submitting the test
      @if($user1->option5img)
      <p class="card-text"> 
       <input type="radio" name="{{$user1->qid}}" class="{{$user1->qid}}" value="5">
-     <img src="{{ asset('uploads/option5/'.$user1->option5img)}}"  alt=""></p>
+     <img src="data:image/png;base64,{{chunk_split(base64_encode($user1->option5img))}}"></p>
       @endif
       @if($user1->option5)
       <p class="card-text"> 
@@ -203,8 +214,8 @@ Kindly submit all the sections before submitting the test
 
     </div>
   
-    <div style='padding-bottom:50px;'>
-<button type="button" class="btn qs" data-toggle="modal" data-target="#myModal">Submit Section</button></div>
+
+<button type="button" class="btn qs" data-toggle="modal" data-target="#myModal">Submit Section</button>
 <p id="al"></p>
 
     </div>
@@ -280,6 +291,7 @@ Kindly submit all the sections before submitting the test
     {totalSecs = localStorage.getItem("time");}
     else
     totalSecs=3600;
+
     $(document).ready(function() {
       
             incTimer();
@@ -287,6 +299,7 @@ Kindly submit all the sections before submitting the test
     
 </script>
 <script>
+
 var y=1;
 $(document).ready(function(){
 var parent= $(".section2");
@@ -297,6 +310,7 @@ var a=divs.length;
 var c=a;
 var arr=[];
 var i=0;
+
 while(a){
   i++;
   var x=Math.floor(Math.random()*a);
@@ -320,6 +334,7 @@ while(a){
    }
    c=c-1;
  }
+
  $("div[name='card1']").click(function() {
     $('html,body').animate({
         scrollTop: $("#{{$user1->qid}}").offset().top-10000
@@ -333,6 +348,7 @@ $(".card-text > input[type=radio]").click(function(){
   
   });
 });
+
 $("div[name='card1']").each(function(){
   $("#card"+y).html(y);
   y=y+1;

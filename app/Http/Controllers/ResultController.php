@@ -189,9 +189,4 @@ return view('final',['count'=>$count,'count1'=>$count1,'count2'=>$count2,'count3
 //echo $count;
 
 }
-public function fetchall(){
-    $users=User::all();
-    $result=Qualitative::all();
-    return view('auth.resultadmin')->with('result',$result);
-}
 }

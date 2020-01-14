@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Comprehension</title>
+  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -16,18 +16,21 @@
   padding: 0;
   overflow: hidden;
 }
+
 .wrapper{
     display: grid;
   grid-template-rows: 520px;
   overflow:auto;
   margin-top:30px;
 }
+
 .content{
   display: grid;
   grid-template-columns: 250px 1fr;
   grid-gap: 10px;
   overflow-y:auto;
 }
+
 .fieldsContainer{
   display: grid;
   grid-template-columns: repeat(3, minmax(70px,1fr));
@@ -35,17 +38,22 @@
   grid-gap: 10px;
   overflow-y:scroll;/*added*/
 }
+
+
 :target {
   border: 2px solid #D4D4D4;
   background-color: #D5D8DC ;
 }
+
 .section2{
     overflow-y:scroll;
 }
+
 .card1{
   padding: 10px;
   background: #ddd;
 }
+
 .qs{
   background-color:#141414;
   color:#ffffff;
@@ -54,12 +62,14 @@
   background-color:#141414;
   color:#FCF3CF;
 }
+
 @media (max-width: 900px) {
     .fieldsContainer{
       display: grid;
       grid-template-columns: 1fr;
     grid-auto-rows: 50px;
   overflow-y:scroll;/*added*/
+
     }
     .content{
   display: grid;
@@ -67,6 +77,7 @@
   overflow-y:auto;
 }
 }
+
 .modal-backdrop{
    backdrop-filter: blur(5px);
    background-color: #01223770;
@@ -74,6 +85,7 @@
 .modal-backdrop.in{
    opacity: 1 !important;
 }
+
 body.modal-open .supreme-container{
     -webkit-filter: blur(1px);
     -moz-filter: blur(1px);
@@ -81,11 +93,12 @@ body.modal-open .supreme-container{
     -ms-filter: blur(1px);
     filter: blur(1px);
 }
+
   </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">FE TEST</a>
+  <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -111,7 +124,7 @@ body.modal-open .supreme-container{
             </li>
             &nbsp;&nbsp;
             <li class="nav-item">
-             <button type="button" class="btn btn-success nav-link" onclick="window.location='{{ route('final') }}'" >End Test</button>
+            <button type="button" class="btn btn-success nav-link" onclick="window.location='{{ route('final') }}'">End Test</button>
             </li>
            
         </ul>
@@ -151,16 +164,16 @@ Kindly submit all the sections before submitting the test
 
     <p class="card-text" > 
     <input type="radio" name="{{$user3->qid}}" class="{{$user3->qid}}" value="1">   @if($user3->option1img)
-    <img src="{{ asset('uploads/option1/'.$user3->option1img)}}"  alt="">
+     <img src="data:image/png;base64,{{chunk_split(base64_encode($user3->option1img))}}">
       @endif
       @if($user3->option1)
       {{$user3->option1}}
-      @endif
+      @endif</input>
    </p>
       <p class="card-text"> 
       <input type="radio" name="{{$user3->qid}}" class="{{$user3->qid}}" value="2">
      @if($user3->option2img)
-    <img src="{{ asset('uploads/option2/'.$user3->option2img)}}"  alt="">
+     <img src="data:image/png;base64,{{chunk_split(base64_encode($user3->option2img))}}">
       @endif
       @if($user3->option2)
       {{$user3->option2}}
@@ -169,7 +182,7 @@ Kindly submit all the sections before submitting the test
       <p class="card-text">
       <input type="radio"  name="{{$user3->qid}}" class="{{$user3->qid}}" value="3"> 
      @if($user3->option3img)
-    <img src="{{ asset('uploads/option3/'.$user3->option3img)}}"  alt="">
+     <img src="data:image/png;base64,{{chunk_split(base64_encode($user3->option3img))}}">
       @endif
       @if($user3->option3)
       {{$user3->option3}}
@@ -178,7 +191,7 @@ Kindly submit all the sections before submitting the test
       <p class="card-text"> 
       <input type="radio" name="{{$user3->qid}}" class="{{$user3->qid}}" value="4">
      @if($user3->option4img)
-    <img src="{{ asset('uploads/option4/'.$user3->option4img)}}"  alt="">
+     <img src="data:image/png;base64,{{chunk_split(base64_encode($user3->option4img))}}">
       @endif
       @if($user3->option4)
       {{$user3->option4}}
@@ -189,9 +202,9 @@ Kindly submit all the sections before submitting the test
 @endforeach
 
     </div>
-    <div style='padding-bottom:50px;'>
+
     <button type="button" class="btn qs" data-toggle="modal" data-target="#myModal">Submit Section</button>
-    </div>
+
 </div>
 <!-- Modal -->
 <div id="myModal" class="modal" role="dialog">
@@ -265,6 +278,7 @@ Kindly submit all the sections before submitting the test
         }
       }
     }
+
     if(localStorage.getItem("time"))
     {totalSecs = localStorage.getItem("time");}
     else
@@ -293,6 +307,7 @@ var i=0;
    }
    a=a-1;
  }
+
  $("div[name='card1']").click(function() {
     $('html,body').animate({
         scrollTop: $("#{{$user3->qid}}").offset().top-10000
@@ -306,10 +321,13 @@ $(".card-text > input[type=radio]").click(function(){
   });
 });
 });
+
 /*$('#Auto').click(function(){
   $('form[name=myForm]').attr('action','autocomp');
   $('form[name=myForm]').submit();
 });*/
+
+
 </script>
 </body>
 </html>

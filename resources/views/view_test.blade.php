@@ -63,7 +63,7 @@
   </style>
 </head>
 <head>
-  <title>Bootstrap Example</title>
+  <title>Tests</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -88,6 +88,7 @@
         <form action="{{action('Test_TeacherController@index')}}" method="GET">                        
             <button type="submit" class="btn btn-primary">Back</button>
         </form>
+        <a href="home" class="btn btn-primary">Home Page</a>
         <form action="{{action('Test_TeacherController@question')}}" method="GET">                        
             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
             <input type="hidden" value="{{$a}}" name="test_id">
@@ -131,6 +132,7 @@
                     <input type="hidden" value="{{$b}}" name="test_n">
                     <input type="hidden" value="{{$q->qid}}" name="quest_id">
                     <input type="hidden" value="qualitative" name="section">
+                    
                     <button type="submit"  class="btn btn-danger">Delete</button>
                     </form>    
                     <p class="right">Correct option is: {{$q->correct}}</p>
@@ -148,6 +150,7 @@
         <form action="{{action('Test_TeacherController@index')}}" method="GET">                        
             <button type="submit" class="btn btn-primary">Back</button>
         </form>
+        <a href="home" class="btn btn-primary">Home Page</a>
         <form action="{{action('Test_TeacherController@question')}}" method="GET">                        
             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
             <input type="hidden" value="{{$a}}" name="test_id">
@@ -206,6 +209,7 @@
         <form action="{{action('Test_TeacherController@index')}}" method="GET">                        
             <button type="submit" class="btn btn-primary">Back</button>
         </form>
+        <a href="home" class="btn btn-primary">Home Page</a>
         <form action="{{action('Test_TeacherController@question')}}" method="GET">                        
             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
             <input type="hidden" value="{{$a}}" name="test_id">
@@ -266,6 +270,7 @@
         <form action="{{action('Test_TeacherController@index')}}" method="GET">                        
             <button type="submit" class="btn btn-primary">Back</button>
         </form>
+        <a href="home" class="btn btn-primary">Home Page</a>
         <form action="{{action('Test_TeacherController@question')}}" method="GET">                        
             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
             <input type="hidden" value="{{$a}}" name="test_id">

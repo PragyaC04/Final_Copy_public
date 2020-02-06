@@ -45,6 +45,7 @@
             </div>
         <form action="{{ action('Test_TeacherController@store') }}" method="POST">
             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+            <input type="hidden" name="last_qt" value=0/>
             <div class="modal-body">
                 
                 <div class="form-group">

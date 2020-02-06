@@ -18,15 +18,16 @@ class Test_TeacherController extends Controller
         $t = DB::select('select * from tests');
         return view('test_display',['t'=>$t]);
      }
-
+     
      public function store(Request $request) {
         $this->validate($request,['test_name'=>'required',]);
+        $last=$_POST['last_qt'];
         $tt = new Create_test;
         $tt->setname = $request->input('test_name');
         $tt->save();
         $t = DB::select('select * from tests');
-        return view('test_display',['t'=>$t]);
-     }
+        return view('test_display',['t'=>$t]); 
+         }
 /* -------------------------- QUESTIONS DISPLAY ------------------------------------------*/
      public function display(){
          $a=$_GET['test_id'];
@@ -43,17 +44,43 @@ class Test_TeacherController extends Controller
         $a=$_GET['test_id'];
         $b=$_GET['test_n'];
         $sect=$_GET['section'];
-        $last_qt = Qualitative_test::all()->where('setid',$a)->last();
+        /* $last_qt = Qualitative_test::all()->where('setid',$a)->last();
         $last_at = Analytical_test::all()->where('setid',$a)->last();
         $last_ct = Creative_test::all()->where('setid',$a)->last();
-        $last_cot = Comprehension_test::all()->where('setid',$a)->last();
+        $last_cot = Comprehension_test::all()->where('setid',$a)->last(); */ 
         //return $qual;
-        return view('add_question')->with('a',$a)->with('b',$b)->with('sect',$sect)->with('last_qt',$last_qt)->with('last_at',$last_at)->with('last_ct',$last_ct)->with('last_cot',$last_cot);
+        return view('add_question')->with('a',$a)->with('b',$b)->with('sect',$sect)/* ->with('last_qt',$last_qt)->with('last_at',$last_at)->with('last_ct',$last_ct)->with('last_cot',$last_cot) */;
      }
 
 /* ------------------------------------------------- QUALITATIVE STORE ----------------------------------------------------------- */
      
      public function qual_store(Request $request){
+      if($request->hasfile('question_image'))
+      {
+        $this->validate($request, ['question_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+
+      if($request->hasfile('option1_image'))
+      {
+        $this->validate($request, ['option1_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+
+      if($request->hasfile('option2_image'))
+      {
+        $this->validate($request, ['option2_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+
+      if($request->hasfile('option3_image'))
+      {
+        $this->validate($request, ['ooption3_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+
+      if($request->hasfile('option4_image'))
+      {
+        $this->validate($request, ['option4_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+        
+ 
         $a=$_POST['test_id'];
         $b=$_POST['test_n'];
         $sect=$_POST['section'];
@@ -61,11 +88,12 @@ class Test_TeacherController extends Controller
         $qual = new Qualitative_test();
         $qual->qid = $request->input('q_number');
         $qual->question = $request->input('q_content');
-        $qual->marks = $request->input('q_mks');
+        $qual->marks = $request->input('q_marks');
         $qual->setid = $request->input('sid');
-        $qual->correct = $request->input('correct');
-        if($request->hasfile('q_image')){
-            $file = $request->file('q_image');
+        $qual->correct = $request->input('q_option');
+        //$qual->correct = $request->input('correct');
+        if($request->hasfile('question_image')){
+            $file = $request->file('question_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/questions/', $filename);
@@ -77,8 +105,8 @@ class Test_TeacherController extends Controller
         }
         
         $qual->option1 = $request->input('o1_content');
-        if($request->hasfile('o1_image')){
-            $file = $request->file('o1_image');
+        if($request->hasfile('option1_image')){
+            $file = $request->file('option1_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option1/', $filename);
@@ -91,8 +119,8 @@ class Test_TeacherController extends Controller
 
         
         $qual->option2 = $request->input('o2_content');
-        if($request->hasfile('o2_image')){
-            $file = $request->file('o2_image');
+        if($request->hasfile('option2_image')){
+            $file = $request->file('option2_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option2/', $filename);
@@ -104,8 +132,8 @@ class Test_TeacherController extends Controller
         }
 
         $qual->option3 = $request->input('o3_content');
-        if($request->hasfile('o3_image')){
-            $file = $request->file('o3_image');
+        if($request->hasfile('option3_image')){
+            $file = $request->file('option3_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option3/', $filename);
@@ -117,8 +145,8 @@ class Test_TeacherController extends Controller
         }
 
         $qual->option4 = $request->input('o4_content');
-        if($request->hasfile('o4_image')){
-            $file = $request->file('o4_image');
+        if($request->hasfile('option4_image')){
+            $file = $request->file('option4_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option4/', $filename);
@@ -131,15 +159,43 @@ class Test_TeacherController extends Controller
         $qual->uniq_id=$qual->setid.$qual->qid;
 
         $qual->save();
-        
+       
+        return view('succ_add')->with('qual',$qual)->with('a',$a)->with('b',$b)->with('sect',$sect);
 
-        return view('add_question')->with('qual',$qual)->with('a',$a)->with('b',$b)->with('sect',$sect);
+        
+        //return view('add_question')->with('qual',$qual)->with('a',$a)->with('b',$b)->with('sect',$sect);
     }
 
 
     /* ------------------------------------------------- ANALYTICAL STORE ----------------------------------------------------------- */
 
     public function analy_store(Request $request){
+        if($request->hasfile('question_image'))
+      {
+        $this->validate($request, ['question_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+
+      if($request->hasfile('option1_image'))
+      {
+        $this->validate($request, ['option1_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+
+      if($request->hasfile('option2_image'))
+      {
+        $this->validate($request, ['option2_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+
+      if($request->hasfile('option3_image'))
+      {
+        $this->validate($request, ['option3_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+
+      if($request->hasfile('option4_image'))
+      {
+        $this->validate($request, ['option4_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+      
+        
         $a=$_POST['test_id'];
         $b=$_POST['test_n'];
         $sect=$_POST['section'];
@@ -147,11 +203,11 @@ class Test_TeacherController extends Controller
         $analy = new Analytical_test();
         $analy->qid = $request->input('q_number');
         $analy->question = $request->input('q_content');
-        $analy->marks = $request->input('q_mks');
+        $analy->marks = $request->input('q_marks');
         $analy->setid = $request->input('sid');
-        $analy->correct = $request->input('correct');
-        if($request->hasfile('q_image')){
-            $file = $request->file('q_image');
+        $analy->correct = $request->input('q_option');
+        if($request->hasfile('question_image')){
+            $file = $request->file('question_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/questions/', $filename);
@@ -163,8 +219,8 @@ class Test_TeacherController extends Controller
         }
         
         $analy->option1 = $request->input('o1_content');
-        if($request->hasfile('o1_image')){
-            $file = $request->file('o1_image');
+        if($request->hasfile('option1_image')){
+            $file = $request->file('option1_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option1/', $filename);
@@ -177,8 +233,8 @@ class Test_TeacherController extends Controller
 
         
         $analy->option2 = $request->input('o2_content');
-        if($request->hasfile('o2_image')){
-            $file = $request->file('o2_image');
+        if($request->hasfile('option2_image')){
+            $file = $request->file('option2_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option2/', $filename);
@@ -190,8 +246,8 @@ class Test_TeacherController extends Controller
         }
 
         $analy->option3 = $request->input('o3_content');
-        if($request->hasfile('o3_image')){
-            $file = $request->file('o3_image');
+        if($request->hasfile('option3_image')){
+            $file = $request->file('option3_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option3/', $filename);
@@ -203,8 +259,8 @@ class Test_TeacherController extends Controller
         }
 
         $analy->option4 = $request->input('o4_content');
-        if($request->hasfile('o4_image')){
-            $file = $request->file('o4_image');
+        if($request->hasfile('option4_image')){
+            $file = $request->file('option4_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option4/', $filename);
@@ -217,13 +273,45 @@ class Test_TeacherController extends Controller
         $analy->uniq_id=$analy->setid.$analy->qid;
         $analy->save();
         
-        return view('add_question')->with('analy',$analy)->with('a',$a)->with('b',$b)->with('sect',$sect);
+        return view('succ_add')->with('analy',$analy)->with('a',$a)->with('b',$b)->with('sect',$sect);
+
+        //return view('add_question')->with('analy',$analy)->with('a',$a)->with('b',$b)->with('sect',$sect);
     }
 
     /* ------------------------------------------------- CREATIVE STORE ----------------------------------------------------------- */
 
 
     public function creat_store(Request $request){
+      if($request->hasfile('question_image'))
+      {
+        $this->validate($request, ['question_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+
+      if($request->hasfile('option1_image'))
+      {
+        $this->validate($request, ['option1_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+
+      if($request->hasfile('option2_image'))
+      {
+        $this->validate($request, ['option2_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+
+      if($request->hasfile('option3_image'))
+      {
+        $this->validate($request, ['option3_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+
+      if($request->hasfile('option4_image'))
+      {
+        $this->validate($request, ['option4_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+
+      if($request->hasfile('option5_image'))
+      {
+        $this->validate($request, ['option5_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+      }
+        
         $a=$_POST['test_id'];
         $b=$_POST['test_n'];
         $sect=$_POST['section'];
@@ -231,11 +319,11 @@ class Test_TeacherController extends Controller
         $creat = new Creative_test();
         $creat->qid = $request->input('q_number');
         $creat->question = $request->input('q_content');
-        $creat->marks = $request->input('q_mks');
+        $creat->marks = $request->input('q_marks');
         $creat->setid = $request->input('sid');
-        $creat->correct = $request->input('correct');
-        if($request->hasfile('q_image')){
-            $file = $request->file('q_image');
+        $creat->correct = $request->input('q_option');
+        if($request->hasfile('question_image')){
+            $file = $request->file('question_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/questions/', $filename);
@@ -247,8 +335,8 @@ class Test_TeacherController extends Controller
         }
         
         $creat->option1 = $request->input('o1_content');
-        if($request->hasfile('o1_image')){
-            $file = $request->file('o1_image');
+        if($request->hasfile('option1_image')){
+            $file = $request->file('option1_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option1/', $filename);
@@ -261,8 +349,8 @@ class Test_TeacherController extends Controller
 
         
         $creat->option2 = $request->input('o2_content');
-        if($request->hasfile('o2_image')){
-            $file = $request->file('o2_image');
+        if($request->hasfile('option2_image')){
+            $file = $request->file('option2_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option2/', $filename);
@@ -274,8 +362,8 @@ class Test_TeacherController extends Controller
         }
 
         $creat->option3 = $request->input('o3_content');
-        if($request->hasfile('o3_image')){
-            $file = $request->file('o3_image');
+        if($request->hasfile('option3_image')){
+            $file = $request->file('option3_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option3/', $filename);
@@ -287,8 +375,8 @@ class Test_TeacherController extends Controller
         }
 
         $creat->option4 = $request->input('o4_content');
-        if($request->hasfile('o4_image')){
-            $file = $request->file('o4_image');
+        if($request->hasfile('option4_image')){
+            $file = $request->file('option4_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option4/', $filename);
@@ -300,8 +388,8 @@ class Test_TeacherController extends Controller
         }
         
         $creat->option5 = $request->input('o5_content');
-        if($request->hasfile('o5_image')){
-            $file = $request->file('o5_image');
+        if($request->hasfile('option5_image')){
+            $file = $request->file('option5_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option5/', $filename);
@@ -315,13 +403,42 @@ class Test_TeacherController extends Controller
 
         $creat->save();
         
-        return view('add_question')->with('creat',$creat)->with('a',$a)->with('b',$b)->with('sect',$sect);
+
+        return view('succ_add')->with('creat',$creat)->with('a',$a)->with('b',$b)->with('sect',$sect);
+
+        //return view('add_question')->with('creat',$creat)->with('a',$a)->with('b',$b)->with('sect',$sect);
     }
 
 
     /* ------------------------------------------------- COMPREHENSION STORE ----------------------------------------------------------- */
 
     public function comp_store(Request $request){
+        if($request->hasfile('question_image'))
+        {
+          $this->validate($request, ['question_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+        }
+  
+        if($request->hasfile('option1_image'))
+        {
+          $this->validate($request, ['option1_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+        }
+  
+        if($request->hasfile('option2_image'))
+        {
+          $this->validate($request, ['option2_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+        }
+  
+        if($request->hasfile('option3_image'))
+        {
+          $this->validate($request, ['option3_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+        }
+  
+        if($request->hasfile('option4_image'))
+        {
+          $this->validate($request, ['option4_image' => 'image|mimes:jpeg,png,jpg,gif|max:512']);
+        }
+        
+
         $a=$_POST['test_id'];
         $b=$_POST['test_n'];
         $sect=$_POST['section'];
@@ -330,11 +447,11 @@ class Test_TeacherController extends Controller
         $comp->para = $request->input('para');
         $comp->qid = $request->input('q_number');
         $comp->question = $request->input('q_content');
-        $comp->marks = $request->input('q_mks');
+        $comp->marks = $request->input('q_marks');
         $comp->setid = $request->input('sid');
-        $comp->correct = $request->input('correct');
-        if($request->hasfile('q_image')){
-            $file = $request->file('q_image');
+        $comp->correct = $request->input('q_option');
+        if($request->hasfile('question_image')){
+            $file = $request->file('question_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/questions/', $filename);
@@ -346,8 +463,8 @@ class Test_TeacherController extends Controller
         }
         
         $comp->option1 = $request->input('o1_content');
-        if($request->hasfile('o1_image')){
-            $file = $request->file('o1_image');
+        if($request->hasfile('option1_image')){
+            $file = $request->file('option1_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option1/', $filename);
@@ -360,8 +477,8 @@ class Test_TeacherController extends Controller
 
         
         $comp->option2 = $request->input('o2_content');
-        if($request->hasfile('o2_image')){
-            $file = $request->file('o2_image');
+        if($request->hasfile('option2_image')){
+            $file = $request->file('option2_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option2/', $filename);
@@ -373,8 +490,8 @@ class Test_TeacherController extends Controller
         }
 
         $comp->option3 = $request->input('o3_content');
-        if($request->hasfile('o3_image')){
-            $file = $request->file('o3_image');
+        if($request->hasfile('option3_image')){
+            $file = $request->file('option3_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option3/', $filename);
@@ -386,8 +503,8 @@ class Test_TeacherController extends Controller
         }
 
         $comp->option4 = $request->input('o4_content');
-        if($request->hasfile('o4_image')){
-            $file = $request->file('o4_image');
+        if($request->hasfile('option4_image')){
+            $file = $request->file('option4_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.'.$extension;
             $file->move('uploads/option4/', $filename);
@@ -401,7 +518,10 @@ class Test_TeacherController extends Controller
 
         $comp->save();
         
-        return view('add_question')->with('comp',$comp)->with('a',$a)->with('b',$b)->with('sect',$sect); 
+
+        return view('succ_add')->with('comp',$comp)->with('a',$a)->with('b',$b)->with('sect',$sect);
+
+        //return view('add_question')->with('comp',$comp)->with('a',$a)->with('b',$b)->with('sect',$sect); 
        }
 
 
@@ -873,7 +993,7 @@ public function comp_edit(){
         $sect=$_GET['section'];
         $c=$_GET['quest_id'];
         $u=$a.$c;
-        Comprehension_est::where('uniq_id',$u)->delete();
+        Comprehension_test::where('uniq_id',$u)->delete();
         //$qual->delete();
         return view('succ_delete')->with('a',$a)->with('b',$b)->with('sect',$sect);
     }
